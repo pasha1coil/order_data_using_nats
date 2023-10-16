@@ -7,6 +7,10 @@ import (
 	"wbl0/internal/repository/model"
 )
 
+type MainRepository struct {
+	Repository
+}
+
 type Repository struct {
 	TasksDb
 	TasksCache
@@ -16,7 +20,6 @@ type Repository struct {
 type TasksDb interface {
 	SaveOrder(data *model.DbItem) (string, error)
 	GetAllOrders() ([]model.DbItem, error)
-	GetOrderByID(id string) (model.DbItem, error)
 }
 
 // cache
@@ -25,9 +28,11 @@ type TasksCache interface {
 	GetFromCache(id string) model.OrderData
 }
 
-func InitRepository(db *sqlx.DB) *Repository {
-	return &Repository{
-		TasksDb:    database.NewDB(db),
-		TasksCache: cache.InitCache(),
+func InitRepository(db *sqlx.DB) *MainRepository {
+	return &MainRepository{
+		Repository{
+			TasksDb:    database.NewDB(db),
+			TasksCache: cache.InitCache(),
+		},
 	}
 }

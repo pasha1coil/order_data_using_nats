@@ -1,17 +1,18 @@
 nats:
   host: "localhost"
-  port: 4223
+  port: "4223"
   cluster_id: "test-cluster"
   client_id: "test-client"
+  publisher_id: "test-publisher"
   channel: "test-channel"
 
 db:
   Host: "localhost"
   Port: "5432"
-  SSL: "disable"
   Uname: "postgres"
-  Pass: "root"
   NameDB: "postgres"
+  SSL: "disable"
+  PASS: "qwerty"
   DriverName: "postgres"
 
 httpsrv:

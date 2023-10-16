@@ -1,7 +1,6 @@
 package model
 
 import (
-	"database/sql/driver"
 	"encoding/json"
 	"errors"
 	"time"
@@ -12,7 +11,6 @@ type DbItem struct {
 	Order OrderData
 }
 
-// изменить в сооьветсвии c data.json
 type OrderData struct {
 	OrderUid    string `json:"order_uid" validate:"required,min=1"`
 	TrackNumber string `json:"track_number" validate:"required"`
@@ -67,8 +65,4 @@ func (d *OrderData) Get(val interface{}) error {
 		return errors.New("Type assertion to []byte failed")
 	}
 	return json.Unmarshal(data, &d)
-}
-
-func (d *OrderData) Data() (value driver.Value, err error) {
-	return json.Marshal(d)
 }

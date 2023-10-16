@@ -1,17 +1,20 @@
 package cache
 
-import "wbl0/internal/repository/model"
+import (
+	log "github.com/sirupsen/logrus"
+	"wbl0/internal/repository/model"
+)
 
 type AddCache struct {
 	Cache
 }
 
-func (c *Cache) AddToCache(data model.OrderData) {
-	//some code
+func (c *AddCache) AddToCache(data model.OrderData) {
+	log.Infoln("Add data to cache")
+	c.Cache[data.OrderUid] = data
 }
 
-func (c *Cache) GetFromCache(id string) model.OrderData {
-	//some code
-
-	return model.OrderData{}
+func (c *AddCache) GetFromCache(id string) model.OrderData {
+	log.Infoln("Get data from cache")
+	return c.Cache[id]
 }

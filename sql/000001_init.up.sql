@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS Orders(
+     Id VARCHAR(100) PRIMARY KEY ,
+     Ord jsonb NOT NULL
+);

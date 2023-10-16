@@ -16,6 +16,7 @@ func CreateSTAN() *StanClient {
 }
 
 func (sCli *StanClient) Connect(clusterID string, clientID string, URL string) error {
+	log.Infoln("Connect, message from publisher")
 	sc, err := stan.Connect(clusterID, clientID, stan.NatsURL(URL))
 	if err != nil {
 		return err
@@ -25,24 +26,15 @@ func (sCli *StanClient) Connect(clusterID string, clientID string, URL string) e
 }
 
 func (sCli *StanClient) Close() {
+	log.Infoln("Close, message from publisher")
 	if sCli != nil {
 		sCli.sc.Close()
 	}
 }
 
-func (sCli *StanClient) PublishFromFile(channel string, filepath string) error {
-	text, err := os.ReadFile(filepath)
-	if err != nil {
-		return err
-	}
-	err = sCli.sc.Publish(channel, text)
-	if err != nil {
-		return err
-	}
-	return err
-}
-
 func (sCli *StanClient) PublishFromCLI(channel string) error {
+	log.Infoln("Publish from CLI, message from publisher")
+	log.Infoln("If you want exit, insert filepath 'exit'")
 	var filepath string
 	for {
 		var text []byte
