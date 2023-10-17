@@ -9,6 +9,7 @@ import (
 	"wbl0/internal/handler"
 	"wbl0/internal/repository"
 	database "wbl0/internal/repository/db"
+	"wbl0/internal/repository/db/dbmodel"
 	"wbl0/internal/server"
 	"wbl0/internal/service"
 	"wbl0/internal/service/consumer"
@@ -24,7 +25,7 @@ func main() {
 		log.Errorf("error intializing configs: %s", err.Error())
 	}
 
-	db, err := database.InitDB(database.DbConfig{
+	db, err := database.Mig(dbmodel.DbConfig{
 		Host:       viper.GetString("db.Host"),
 		Port:       viper.GetString("db.Port"),
 		SSL:        viper.GetString("db.SSL"),
@@ -71,7 +72,7 @@ func main() {
 	if err != nil {
 		log.Printf("Error subscribing to channel : %s", err)
 	}
-	defer sub.Unsubscribe()
+	//defer sub.Unsubscribe()
 
 	srv := new(server.Server)
 	go func() {
@@ -93,5 +94,8 @@ func main() {
 	}
 	if err := db.Close(); err != nil {
 		log.Errorf("an error occurred while closing the database connection: %s", err.Error())
+	}
+	if err := sub.Unsubscribe(); err != nil {
+		log.Errorf("an error occured while Unsubscribe")
 	}
 }

@@ -14,25 +14,22 @@ func NewHandler(services *service.Service) *Handler {
 	return &Handler{Service: services}
 }
 
-func (h *Handler) Home(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message": "Welcome to the Home Page!",
-	})
-}
-
 func (h *Handler) ShowData(c *gin.Context) {
 	uid := c.Param("uid")
 	data := h.Service.GetFromCacheByUID(uid)
-	c.JSON(http.StatusOK, data)
+	if data.OrderUid == "" {
+		c.JSON(http.StatusOK, "Not such data")
+	} else {
+		c.JSON(http.StatusOK, data)
+	}
+
 }
 
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.Default()
-	router.Handle("GET", "/", h.Home)
+	fileServer := http.FileServer(http.Dir("internal/ui/html/static/"))
+	router.GET("/", gin.WrapH(http.StripPrefix("/", fileServer)))
 	router.Handle("GET", "/show/:uid", h.ShowData)
-
-	fileServer := http.FileServer(http.Dir("ui/html/static/"))
-	router.GET("/static/*filepath", gin.WrapH(http.StripPrefix("/static/", fileServer)))
 
 	return router
 }

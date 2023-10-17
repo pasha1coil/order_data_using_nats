@@ -58,7 +58,7 @@ func (a *AddService) GetAllOrders() ([]model.DbItem, error) {
 	return di, err
 }
 
-// восстановить кэш
+// Восстановить кэш
 func (a *AddService) RestoreCache() error {
 	dbItems, err := a.GetAllOrders()
 	if dbItems == nil {

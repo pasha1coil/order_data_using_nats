@@ -29,6 +29,7 @@ func (sCli *StanClient) Close() {
 	log.Infoln("Close, message from publisher")
 	if sCli != nil {
 		sCli.sc.Close()
+		log.Infoln("Closed, message from publisher")
 	}
 }
 

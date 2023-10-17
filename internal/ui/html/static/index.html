@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+    <title>HomePage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <style>
+        .third {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            transition-duration: 0.4s;
+        }
+
+        .third:hover {
+            background-color: #45a049;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+<div>
+    <center><h3>Введите id</h3></center>
+    <center><input id="idInput" placeholder="Add id"/></center>
+    <center><button class="third" onclick="redirectToId()">Поиск</button></center>
+</div>
+
+<script>
+    function redirectToId() {
+        var id = document.getElementById('idInput').value;
+        if(id.trim() === ""){
+            alert("Empty input, please enter ID");
+            return;
+        }
+        window.location.href = "http://localhost:8080/show/" + id;
+    }
+</script>
+
+</body>
+</html>
