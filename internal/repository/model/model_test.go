@@ -12,7 +12,7 @@ func TestGet(t *testing.T) {
 		data := OrderData{}
 		err := data.Get(123)
 		require.Error(t, err)
-		assert.Equal(t, "Type assertion to []byte failed", err.Error())
+		assert.Equal(t, "type assertion to []byte failed", err.Error())
 	})
 
 	t.Run("fail on json unmarshal", func(t *testing.T) {
