@@ -1,8 +1,8 @@
 package main
 
 import (
-	"wbl0/configs"
-	"wbl0/internal/service/publisher"
+	"github.com/pasha1coil/order_data_using_nats/configs"
+	"github.com/pasha1coil/order_data_using_nats/internal/service/publisher"
 
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -19,7 +19,7 @@ func main() {
 		viper.GetString("nats.host")+":"+viper.GetString("nats.port"))
 	defer client.Close()
 	if err != nil {
-		log.Fatalf("Error connecting to nats : %s", err)
+		log.Fatalf("Error connecting to nats : %s", err.Error())
 	}
 	_ = client.PublishFromCLI(viper.GetString("nats.channel"))
 }

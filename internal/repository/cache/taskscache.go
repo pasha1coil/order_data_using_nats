@@ -1,8 +1,8 @@
 package cache
 
 import (
+	"github.com/pasha1coil/order_data_using_nats/internal/repository/model"
 	log "github.com/sirupsen/logrus"
-	"wbl0/internal/repository/model"
 )
 
 type AddCache struct {

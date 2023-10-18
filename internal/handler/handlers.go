@@ -2,8 +2,8 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/pasha1coil/order_data_using_nats/internal/service"
 	"net/http"
-	"wbl0/internal/service"
 )
 
 type Handler struct {

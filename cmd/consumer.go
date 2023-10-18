@@ -2,17 +2,17 @@ package main
 
 import (
 	"context"
+	"github.com/pasha1coil/order_data_using_nats/configs"
+	"github.com/pasha1coil/order_data_using_nats/internal/handler"
+	"github.com/pasha1coil/order_data_using_nats/internal/repository"
+	database "github.com/pasha1coil/order_data_using_nats/internal/repository/db"
+	"github.com/pasha1coil/order_data_using_nats/internal/repository/db/dbmodel"
+	"github.com/pasha1coil/order_data_using_nats/internal/server"
+	"github.com/pasha1coil/order_data_using_nats/internal/service"
+	"github.com/pasha1coil/order_data_using_nats/internal/service/consumer"
 	"os"
 	"os/signal"
 	"syscall"
-	"wbl0/configs"
-	"wbl0/internal/handler"
-	"wbl0/internal/repository"
-	database "wbl0/internal/repository/db"
-	"wbl0/internal/repository/db/dbmodel"
-	"wbl0/internal/server"
-	"wbl0/internal/service"
-	"wbl0/internal/service/consumer"
 
 	"github.com/nats-io/stan.go"
 	log "github.com/sirupsen/logrus"
@@ -62,7 +62,7 @@ func main() {
 		viper.GetString("nats.host")+":"+viper.GetString("nats.port"))
 
 	if err != nil {
-		log.Errorf("Error connecting to STAN: %s", err)
+		log.Errorf("Error connecting to STAN: %s", err.Error())
 	}
 	defer connect.Close()
 
@@ -70,7 +70,7 @@ func main() {
 	sub, err := connect.SubscribeToChannel(viper.GetString("nats.channel"), stan.StartWithLastReceived())
 
 	if err != nil {
-		log.Printf("Error subscribing to channel : %s", err)
+		log.Printf("Error subscribing to channel : %s", err.Error())
 	}
 	//defer sub.Unsubscribe()
 

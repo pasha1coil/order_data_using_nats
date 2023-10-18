@@ -7,8 +7,8 @@ import (
 	_ "github.com/golang-migrate/migrate/source/file"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
+	"github.com/pasha1coil/order_data_using_nats/internal/repository/db/dbmodel"
 	log "github.com/sirupsen/logrus"
-	"wbl0/internal/repository/db/dbmodel"
 )
 
 func Mig(cfg dbmodel.DbConfig) (*sqlx.DB, error) {
@@ -23,13 +23,13 @@ func Mig(cfg dbmodel.DbConfig) (*sqlx.DB, error) {
 		fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=%s",
 			cfg.Uname, cfg.Pass, cfg.Host, cfg.Port, cfg.NameDB, cfg.SSL))
 	if err != nil {
-		log.Errorf("Error New migrate:%s", err)
+		log.Errorf("Error New migrate:%s", err.Error())
 		return nil, err
 	}
 
 	err = mig.Up()
 	if err != nil && err != migrate.ErrNoChange {
-		log.Errorf("Error Up migrate:%s", err)
+		log.Errorf("Error Up migrate:%s", err.Error())
 		return nil, err
 	}
 	return db, nil

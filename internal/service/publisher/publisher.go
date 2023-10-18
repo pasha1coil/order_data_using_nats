@@ -46,12 +46,12 @@ func (sCli *StanClient) PublishFromCLI(channel string) error {
 		}
 		text, err := os.ReadFile(filepath)
 		if err != nil {
-			log.Printf("Error reading file : %s", err)
+			log.Printf("Error reading file : %s", err.Error())
 			return err
 		}
 		err = sCli.sc.Publish(channel, text)
 		if err != nil {
-			log.Fatalf("Error publish to queue : %s", err)
+			log.Fatalf("Error publish to queue : %s", err.Error())
 		}
 	}
 }

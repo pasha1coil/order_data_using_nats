@@ -2,10 +2,12 @@ package repository
 
 import (
 	"github.com/jmoiron/sqlx"
-	"wbl0/internal/repository/cache"
-	database "wbl0/internal/repository/db"
-	"wbl0/internal/repository/model"
+	"github.com/pasha1coil/order_data_using_nats/internal/repository/cache"
+	database "github.com/pasha1coil/order_data_using_nats/internal/repository/db"
+	"github.com/pasha1coil/order_data_using_nats/internal/repository/model"
 )
+
+//go:generate mockgen -source=repository.go -destination=mocks/mock.go
 
 type MainRepository struct {
 	Repository

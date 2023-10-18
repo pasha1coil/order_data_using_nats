@@ -2,9 +2,9 @@ package service
 
 import (
 	"github.com/go-playground/validator/v10"
+	"github.com/pasha1coil/order_data_using_nats/internal/repository"
+	"github.com/pasha1coil/order_data_using_nats/internal/repository/model"
 	log "github.com/sirupsen/logrus"
-	"wbl0/internal/repository"
-	"wbl0/internal/repository/model"
 )
 
 type AddService struct {
@@ -22,13 +22,13 @@ func (a *AddService) SaveOrderData(data []byte) error {
 	orderdata := new(model.OrderData)
 	err := orderdata.Get(data)
 	if err != nil {
-		log.Errorf("Wrong format: %s", err)
+		log.Errorf("Wrong format: %s", err.Error())
 		return err
 	}
 	validate := validator.New()
 	err = validate.Struct(orderdata)
 	if err != nil {
-		log.Errorf("Error validate: %s", err)
+		log.Errorf("Error validate: %s", err.Error())
 		return err
 	}
 	itemData := new(model.DbItem)
@@ -37,7 +37,7 @@ func (a *AddService) SaveOrderData(data []byte) error {
 	a.repo.AddToCache(*orderdata)
 	_, err = a.repo.SaveOrder(itemData)
 	if err != nil {
-		log.Errorf("Erroe save order:%s", err)
+		log.Errorf("Erroe save order:%s", err.Error())
 		return err
 	}
 	return err
@@ -52,7 +52,7 @@ func (a *AddService) GetFromCacheByUID(id string) model.OrderData {
 func (a *AddService) GetAllOrders() ([]model.DbItem, error) {
 	di, err := a.repo.GetAllOrders()
 	if err != nil {
-		log.Errorf("Error get all orders:%s", err)
+		log.Errorf("Error get all orders:%s", err.Error())
 		return nil, err
 	}
 	return di, err
@@ -62,7 +62,7 @@ func (a *AddService) GetAllOrders() ([]model.DbItem, error) {
 func (a *AddService) RestoreCache() error {
 	dbItems, err := a.GetAllOrders()
 	if dbItems == nil {
-		log.Errorf("Error get all orders from RestoreCache:%s", err)
+		log.Errorf("Error get all orders from RestoreCache:%s", err.Error())
 		return err
 	}
 	for _, dbItem := range dbItems {

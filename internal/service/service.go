@@ -1,10 +1,11 @@
 package service
 
 import (
-	"wbl0/internal/repository"
-	"wbl0/internal/repository/model"
+	"github.com/pasha1coil/order_data_using_nats/internal/repository"
+	"github.com/pasha1coil/order_data_using_nats/internal/repository/model"
 )
 
+//go:generate mockgen -source=service.go -destination=mocks/mock.go
 type Service struct {
 	Tasks
 }

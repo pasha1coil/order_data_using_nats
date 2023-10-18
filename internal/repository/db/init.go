@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
+	"github.com/pasha1coil/order_data_using_nats/internal/repository/db/dbmodel"
 	log "github.com/sirupsen/logrus"
-	"wbl0/internal/repository/db/dbmodel"
 )
 
 func InitDB(cfg dbmodel.DbConfig) (*sqlx.DB, error) {

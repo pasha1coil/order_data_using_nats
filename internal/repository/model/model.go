@@ -62,7 +62,7 @@ type OrderData struct {
 func (d *OrderData) Get(val interface{}) error {
 	data, ok := val.([]byte)
 	if !ok {
-		return errors.New("Type assertion to []byte failed")
+		return errors.New("type assertion to []byte failed")
 	}
 	return json.Unmarshal(data, &d)
 }
